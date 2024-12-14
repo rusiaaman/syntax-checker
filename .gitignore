@@ -1,0 +1,20 @@
+# Rust specific
+/target
+**/*.rs.bk
+Cargo.lock
+
+# Parser repositories (will be cloned during build)
+/parsers/
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*~
+
+# macOS specific
+.DS_Store
+
+# Debugging and temporary files
+*.log
+*.tmp

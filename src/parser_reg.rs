@@ -17,6 +17,17 @@ extern "C" {
     fn tree_sitter_toml() -> Language;
     fn tree_sitter_php() -> Language;
     fn tree_sitter_c_sharp() -> Language;
+    fn tree_sitter_elisp() -> Language;
+    fn tree_sitter_elixir() -> Language;
+    fn tree_sitter_elm() -> Language;
+    fn tree_sitter_embedded_template() -> Language;
+    fn tree_sitter_lua() -> Language;
+
+
+    fn tree_sitter_rescript() -> Language;
+    fn tree_sitter_solidity() -> Language;
+
+    fn tree_sitter_tsx() -> Language;
 }
 
 pub fn get_language(name: &str) -> Option<Language> {
@@ -37,6 +48,17 @@ pub fn get_language(name: &str) -> Option<Language> {
         "toml" => Some(unsafe { tree_sitter_toml() }),
         "php" => Some(unsafe { tree_sitter_php() }),
         "c_sharp" => Some(unsafe { tree_sitter_c_sharp() }),
+        "elisp" => Some(unsafe { tree_sitter_elisp() }),
+        "elixir" => Some(unsafe { tree_sitter_elixir() }),
+        "elm" => Some(unsafe { tree_sitter_elm() }),
+        "embedded_template" => Some(unsafe { tree_sitter_embedded_template() }),
+        "lua" => Some(unsafe { tree_sitter_lua() }),
+
+
+        "rescript" => Some(unsafe { tree_sitter_rescript() }),
+        "solidity" => Some(unsafe { tree_sitter_solidity() }),
+
+        "tsx" => Some(unsafe { tree_sitter_tsx() }),
         _ => None,
     }
 }
@@ -45,6 +67,8 @@ pub fn supported_languages() -> Vec<&'static str> {
     vec![
         "rust", "typescript", "python", "c", "cpp", "javascript",
         "bash", "css", "html", "java", "json", "go", "ruby",
-        "toml", "php", "c_sharp"
+        "toml", "php", "c_sharp", "elisp", "elixir", "elm",
+        "embedded_template", "lua", "rescript",
+        "solidity", "tsx"
     ]
 }

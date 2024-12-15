@@ -1,0 +1,7 @@
+reg example {
+    field {
+        sw = rw;
+        hw = r;
+        desc = "An example field";
+    } f1[7:0];
+};

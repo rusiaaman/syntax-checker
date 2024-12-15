@@ -4,28 +4,35 @@ Multi-Parser is a command-line tool that performs syntax checking for multiple p
 
 ## Features
 
-- Support for multiple languages including:
+  - Support for multiple languages including:
+  - Fast parsing using tree-sitter
+  - Precise error reporting with line and column numbers
+  - No need for language-specific toolchains
+  - Easy to extend with additional language support
+
+  - Supported Languages:
   - Bash
   - C
   - C++
   - C#
   - CSS
+  - Elisp (Emacs Lisp)
+  - Elixir
+  - Elm
   - Go
   - HTML
   - Java
   - JavaScript
   - JSON
+  - Lua
   - PHP
   - Python
+  - ReScript
   - Ruby
   - Rust
+  - Solidity
   - TOML
-  - TypeScript
-
-- Fast parsing using tree-sitter
-- Precise error reporting with line and column numbers
-- No need for language-specific toolchains
-- Easy to extend with additional language support
+  - TypeScript/TSX
 
 ## Installation
 
@@ -53,8 +60,11 @@ multi-parser python script.py
 # Check a JavaScript file
 multi-parser javascript app.js
 
-# Check a PHP file
-multi-parser php index.php
+# Check an Elm file
+multi-parser elm Main.elm
+
+# Check a Solidity smart contract
+multi-parser solidity Contract.sol
 ```
 
 ## Examples
@@ -78,43 +88,55 @@ Syntax errors detected:
   - Error at line 4, column 5: Type "ERROR"
 ```
 
-### PHP Syntax Check
-```php
-<?php
-function test($var) {
-    echo "Hello" . $var;
-    echo "Missing semicolon"
-    return "test"
-}
+### Elm Syntax Check
+```elm
+module Main exposing (..)
+
+import Html exposing (text)
+
+main =
+    text "Hello World"    -- Missing parentheses
+    let 
+        x = 42
+    in
+        x + y            -- Unknown variable y
 ```
 
 Running the checker:
 ```bash
-$ multi-parser php test.php
+$ multi-parser elm test.elm
 Syntax errors detected:
-  - Error at line 4, column 5: Type "ERROR"
+  - Error at line 6: Missing parentheses
+  - Error at line 10: Undefined variable 'y'
 ```
 
 ## Supported Languages and File Extensions
 
-| Language    | Extension(s)        | Command        |
-|------------|-------------------|----------------|
-| Bash       | .sh               | bash           |
-| C          | .c, .h           | c              |
-| C++        | .cpp, .hpp       | cpp            |
-| C#         | .cs              | c_sharp        |
-| CSS        | .css             | css            |
-| Go         | .go              | go             |
-| HTML       | .html, .htm      | html           |
-| Java       | .java            | java           |
-| JavaScript | .js              | javascript     |
-| JSON       | .json            | json           |
-| PHP        | .php             | php            |
-| Python     | .py              | python         |
-| Ruby       | .rb              | ruby           |
-| Rust       | .rs              | rust           |
-| TOML       | .toml            | toml           |
-| TypeScript | .ts              | typescript     |
+| Language       | Extension(s)        | Command            |
+|---------------|-------------------|-------------------|
+| Bash          | .sh               | bash              |
+| C             | .c, .h           | c                 |
+| C++           | .cpp, .hpp       | cpp               |
+| C#            | .cs              | c_sharp           |
+| CSS           | .css             | css               |
+| Elisp         | .el              | elisp             |
+| Elixir        | .ex, .exs        | elixir           |
+| Elm           | .elm             | elm              |
+| Go            | .go              | go                |
+| HTML          | .html, .htm      | html             |
+| Java          | .java            | java             |
+| JavaScript    | .js              | javascript        |
+| JSON          | .json            | json             |
+| Lua           | .lua             | lua              |
+| PHP           | .php             | php              |
+| Python        | .py              | python           |
+| ReScript      | .res             | rescript         |
+| Ruby          | .rb              | ruby             |
+| Rust          | .rs              | rust             |
+| Solidity      | .sol             | solidity         |
+| TOML          | .toml            | toml             |
+| TypeScript    | .ts              | typescript        |
+| TSX           | .tsx             | tsx              |
 
 ## How It Works
 
@@ -134,6 +156,10 @@ Contributions are welcome! Here are some ways you can contribute:
 3. Add new features
 4. Report bugs
 5. Improve documentation
+
+## Notes
+
+Some experimental language support (OCaml, QL, SystemRDL) has been temporarily disabled due to parser integration issues. Contributions to fix these parsers are welcome.
 
 ## License
 

@@ -8,7 +8,9 @@ fn main() {
     let languages = [
         "rust", "typescript", "python", "c", "cpp", "javascript",
         "bash", "css", "html", "java", "json", "go", "ruby", 
-        "toml", "php", "c_sharp"
+        "toml", "php", "c_sharp", "elisp", "elixir", "elm", 
+        "embedded_template", "lua", "rescript", 
+        "solidity", "tsx"
     ];
 
     let tree_sitter_include = format!("{}/target/debug/build/tree-sitter-*/out", manifest_dir);
@@ -33,7 +35,19 @@ fn main() {
                 builder.file(&lang_dir.join("php_only/src/parser.c"));
                 builder.file(&lang_dir.join("php_only/src/scanner.c"));
             }
-        } else {
+        }
+        // Handle special cases for TypeScript and TSX
+        else if *lang == "typescript" || *lang == "tsx" {
+            let type_dir = if *lang == "typescript" { "typescript" } else { "tsx" };
+            builder.include(&lang_dir.join(format!("{}/src", type_dir)));
+            if lang_dir.join(format!("{}/src/parser.c", type_dir)).exists() {
+                builder.file(&lang_dir.join(format!("{}/src/parser.c", type_dir)));
+            }
+            if lang_dir.join(format!("{}/src/scanner.c", type_dir)).exists() {
+                builder.file(&lang_dir.join(format!("{}/src/scanner.c", type_dir)));
+            }
+        }
+        else {
             builder.include(&lang_dir.join("src"));
         }
 
@@ -54,10 +68,15 @@ fn main() {
             builder.file(&parser_path);
         }
 
-        // Add scanner if it exists
-        let scanner_path = lang_dir.join("src/scanner.c");
-        if scanner_path.exists() {
-            builder.file(&scanner_path);
+        // Add scanner if it exists (can be .c or .cc)
+        let scanner_c_path = lang_dir.join("src/scanner.c");
+        let scanner_cc_path = lang_dir.join("src/scanner.cc");
+        
+        if scanner_c_path.exists() {
+            builder.file(&scanner_c_path);
+        } else if scanner_cc_path.exists() {
+            builder.cpp(true);
+            builder.file(&scanner_cc_path);
         }
 
         // Build with appropriate flags

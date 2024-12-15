@@ -1,3 +1,9 @@
+# Multi-Parser: A Multi-Language Syntax Checker
+
+Multi-Parser is a command-line tool that performs syntax checking for multiple programming languages using tree-sitter parsers. It provides quick syntax validation without requiring the actual language toolchain to be installed.
+
+## Features
+
   - Support for multiple languages including:
   - Bash
   - C

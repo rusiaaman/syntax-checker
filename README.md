@@ -33,6 +33,11 @@ Multi-Parser is a command-line tool that performs syntax checking for multiple p
   - Solidity
   - TOML
   - TypeScript/TSX
+
+## Installation
+
+### From Source
+
 ```bash
 git clone https://github.com/rusiaaman/syntax-checker.git
 cd syntax-checker

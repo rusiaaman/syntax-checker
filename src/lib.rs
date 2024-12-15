@@ -83,7 +83,7 @@ fn check_syntax(program_name: &str, program_content: &str) -> PyResult<Output> {
 }
 
 #[pymodule]
-fn multi_parser(_py: Python, m: &PyModule) -> PyResult<()> {
+fn syntax_checker(_py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(check_syntax, m)?)?;
     m.add_class::<Output>()?;
     Ok(())

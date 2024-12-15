@@ -61,6 +61,7 @@ print(output.description)  # ""
 | HTML          | .html, .htm      | html             |
 | Java          | .java            | java             |
 | JavaScript    | .js              | javascript        |
+| JSX           | .jsx             | jsx              |
 | JSON          | .json            | json             |
 | Lua           | .lua             | lua              |
 | PHP           | .php             | php              |

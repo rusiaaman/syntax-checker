@@ -32,11 +32,11 @@ struct Output {
 }
 
 #[pyfunction]
-fn check_syntax(program_name: &str, program_content: &str) -> PyResult<Output> {
+fn check_syntax(program_extension: &str, program_content: &str) -> PyResult<Output> {
     let mut parser = Parser::new();
     
     // Get the appropriate language parser
-    let language: Language = match program_name.split('.').last().unwrap_or("") {
+    let language: Language = match program_extension {
         "py" => unsafe { tree_sitter_python() },
         "js" => unsafe { tree_sitter_javascript() },
         "ts" | "tsx" => unsafe { tree_sitter_typescript() },

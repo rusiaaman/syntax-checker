@@ -1,7 +1,0 @@
-[package]
-name = "test"
-version = 0.1.0  # Missing quotes for version string
-authors = ["Test Author"]
-
-[dependencies
-clap = "4.0.0"  # Missing closing bracket above

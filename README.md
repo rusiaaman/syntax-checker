@@ -5,6 +5,12 @@ Multi-Parser is a command-line tool that performs syntax checking for multiple p
 ## Features
 
   - Support for multiple languages including:
+  - Fast parsing using tree-sitter
+  - Precise error reporting with line and column numbers
+  - No need for language-specific toolchains
+  - Easy to extend with additional language support
+
+  - Supported Languages:
   - Bash
   - C
   - C++

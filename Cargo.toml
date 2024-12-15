@@ -1,10 +1,10 @@
 [package]
-name = "syntax-parser"
-version = "0.1.0"
+name = "syntax-checker"
+version = "0.1.1"
 edition = "2021"
 
 [lib]
-name = "syntax_parser"
+name = "syntax_checker"
 crate-type = ["cdylib"]
 
 [dependencies]

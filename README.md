@@ -1,6 +1,9 @@
-# Multi-Parser: A Multi-Language Syntax Checker
+# Syntax-checker: A Multi-Language Syntax Checker
 
-Multi-Parser is a command-line tool that performs syntax checking for multiple programming languages using tree-sitter parsers. It provides quick syntax validation without requiring the actual language toolchain to be installed.
+A Python library that uses Tree-sitter to check syntax errors across multiple programming languages based on Rust.
+
+## Installation
+`pip install syntax_checker`
 
 ## Features
 
@@ -10,105 +13,37 @@ Multi-Parser is a command-line tool that performs syntax checking for multiple p
   - No need for language-specific toolchains
   - Easy to extend with additional language support
 
-  - Supported Languages:
-  - Bash
-  - C
-  - C++
-  - C#
-  - CSS
-  - Elisp (Emacs Lisp)
-  - Elixir
-  - Elm
-  - Go
-  - HTML
-  - Java
-  - JavaScript
-  - JSON
-  - Lua
-  - PHP
-  - Python
-  - ReScript
-  - Ruby
-  - Rust
-  - Solidity
-  - TOML
-  - TypeScript/TSX
-
-## Installation
-
-### From Source
-
-```bash
-git clone https://github.com/rusiaaman/syntax-checker.git
-cd syntax-checker
-cargo build --release
-```
-
-The binary will be available at `target/release/multi-parser`
-
 ## Usage
+The library provides a simple interface to check syntax errors in source code:
 
-```bash
-multi-parser <language> <file>
-```
-
-For example:
-```bash
-# Check a Python file
-multi-parser python script.py
-
-# Check a JavaScript file
-multi-parser javascript app.js
-
-# Check an Elm file
-multi-parser elm Main.elm
-
-# Check a Solidity smart contract
-multi-parser solidity Contract.sol
-```
-
-## Examples
-
-### Python Syntax Check
 ```python
-# test.py
-def test():
-    print("Hello")
-    print("Missing closing parenthesis"
-    return "test"
+import syntax_checker
 
-x = test()
+# Check Python syntax
+output = syntax_checker.check_syntax("py", """
+def invalid_function[T](x):  # Invalid type parameter syntax
+    print(\"unclosed string')  # Unclosed string
+""")
+
+# Get error positions as (line, column) tuples
+print(output.errors)  # [(2, 19), (3, 11)]
+
+# Get error descriptions
+print(output.description)
+# Line 2, Column 19: Syntax error: unexpected ERROR in function_definition
+# Line 3, Column 11: Missing string_content in string
+
+# Check a file without errors
+output = syntax_checker.check_syntax("py", """
+def valid_function(x: int) -> int:
+    return x * 2
+""")
+
+print(output.errors)  # []
+print(output.description)  # ""
 ```
 
-Running the checker:
-```bash
-$ multi-parser python test.py
-Syntax errors detected:
-  - Error at line 3, column 10: Type "ERROR"
-  - Error at line 4, column 5: Type "ERROR"
-```
 
-### Elm Syntax Check
-```elm
-module Main exposing (..)
-
-import Html exposing (text)
-
-main =
-    text "Hello World"    -- Missing parentheses
-    let 
-        x = 42
-    in
-        x + y            -- Unknown variable y
-```
-
-Running the checker:
-```bash
-$ multi-parser elm test.elm
-Syntax errors detected:
-  - Error at line 6: Missing parentheses
-  - Error at line 10: Undefined variable 'y'
-```
 
 ## Supported Languages and File Extensions
 
@@ -140,7 +75,7 @@ Syntax errors detected:
 
 ## How It Works
 
-Multi-Parser uses [tree-sitter](https://tree-sitter.github.io/tree-sitter/) parsers to analyze source code and detect syntax errors. Tree-sitter is a parser generator tool and incremental parsing library that can build a concrete syntax tree for source files and efficiently update it as the source file is edited.
+Syntax checker uses [tree-sitter](https://tree-sitter.github.io/tree-sitter/) parsers to analyze source code and detect syntax errors. Tree-sitter is a parser generator tool and incremental parsing library that can build a concrete syntax tree for source files and efficiently update it as the source file is edited.
 
 The tool:
 1. Determines the appropriate parser based on the specified language

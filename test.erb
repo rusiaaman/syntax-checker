@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome to <%= @title %></title>
+</head>
+<body>
+  <h1><%= @message %></h1>
+  <% if @show_list %>
+    <ul>
+      <% @items.each do |item| %>
+        <li><%= item %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</body>
+</html>

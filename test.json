@@ -1,0 +1,9 @@
+{
+    "name": "test",
+    "version": "1.0.0"
+    "description": "Test file",  // Missing comma above
+    "dependencies": {
+        "package1": "^1.0.0",
+        "package2": "^2.0.0",  // Extra comma
+    }
+}

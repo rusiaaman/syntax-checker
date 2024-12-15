@@ -1,74 +1,72 @@
 use std::path::Path;
-use std::process::Command;
 use std::env;
 
 fn main() {
-    let out_dir = env::var("OUT_DIR").unwrap();
-    let dest_path = Path::new(&out_dir);
-    let tree_sitter_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+    let manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
+    let parsers_dir = Path::new(&manifest_dir).join("parsers");
 
     let languages = [
-        ("rust", "https://github.com/tree-sitter/tree-sitter-rust.git"),
-        ("typescript", "https://github.com/tree-sitter/tree-sitter-typescript.git"),
-        ("python", "https://github.com/tree-sitter/tree-sitter-python.git"),
-        ("c", "https://github.com/tree-sitter/tree-sitter-c.git"),
-        ("cpp", "https://github.com/tree-sitter/tree-sitter-cpp.git"),
-        ("javascript", "https://github.com/tree-sitter/tree-sitter-javascript.git"),
+        "rust", "typescript", "python", "c", "cpp", "javascript",
+        "bash", "css", "html", "java", "json", "go", "ruby", 
+        "toml", "php", "c_sharp"
     ];
 
-    let tree_sitter_include = format!("{}/target/debug/build/tree-sitter-*/out", tree_sitter_dir);
+    let tree_sitter_include = format!("{}/target/debug/build/tree-sitter-*/out", manifest_dir);
 
-    for (lang, repo_url) in languages.iter() {
-        let lang_dir = dest_path.join(format!("parsers-{}", lang));
-        std::fs::create_dir_all(&lang_dir).expect("Failed to create parser directory");
+    for lang in languages.iter() {
+        let lang_dir = parsers_dir.join(lang);
+        let mut builder = cc::Build::new();
 
-        let parser_c_path = lang_dir.join("src/parser.c");
-        let external_scanner_path = lang_dir.join("src/scanner.c");
-        let typescript_parser_c_path = lang_dir.join("typescript/src/parser.c");
-        let typescript_scanner_c_path = lang_dir.join("typescript/src/scanner.c");
+        builder
+            .include(&tree_sitter_include)
+            .include(&manifest_dir)
+            .include(format!("{}/include", manifest_dir));
 
-        if !parser_c_path.exists() && !typescript_parser_c_path.exists() {
-            let clone_status = Command::new("git")
-                .args(&["clone", "--depth=1", repo_url, lang_dir.to_str().unwrap()])
-                .status()
-                .expect("Failed to clone parser repository");
+        // Special handling for PHP which has two parsers
+        if *lang == "php" {
+            builder
+                .include(&lang_dir.join("php/src"))
+                .include(&lang_dir.join("php_only/src"));
+            if lang_dir.join("php/src/parser.c").exists() {
+                builder.file(&lang_dir.join("php/src/parser.c"));
+                builder.file(&lang_dir.join("php/src/scanner.c"));
+                builder.file(&lang_dir.join("php_only/src/parser.c"));
+                builder.file(&lang_dir.join("php_only/src/scanner.c"));
+            }
+        } else {
+            builder.include(&lang_dir.join("src"));
+        }
 
-            if !clone_status.success() {
-                panic!("Failed to clone {} parser", lang);
+        // Handle special cases for TypeScript and TSX
+        if *lang == "typescript" {
+            builder.include(&lang_dir.join("typescript/src"));
+            if lang_dir.join("typescript/src/parser.c").exists() {
+                builder.file(&lang_dir.join("typescript/src/parser.c"));
+            }
+            if lang_dir.join("typescript/src/scanner.c").exists() {
+                builder.file(&lang_dir.join("typescript/src/scanner.c"));
             }
         }
 
-        let mut builder = cc::Build::new();
+        // Add main parser source
+        let parser_path = lang_dir.join("src/parser.c");
+        if parser_path.exists() {
+            builder.file(&parser_path);
+        }
+
+        // Add scanner if it exists
+        let scanner_path = lang_dir.join("src/scanner.c");
+        if scanner_path.exists() {
+            builder.file(&scanner_path);
+        }
+
+        // Build with appropriate flags
         builder
-            .include(lang_dir.join("src"))
-            .include(lang_dir.join("typescript/src"))
-            .include(&tree_sitter_dir)
-            .include(format!("{}/include", tree_sitter_dir))
-            .include(&tree_sitter_include);
+            .flag_if_supported("-Wno-unused-parameter")
+            .flag_if_supported("-Wno-unused-but-set-variable")
+            .compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
 
-        // Add parser source
-        if parser_c_path.exists() {
-            builder.file(parser_c_path);
-        }
-        if typescript_parser_c_path.exists() {
-            builder.file(typescript_parser_c_path);
-        }
-
-        // Add external scanner if exists
-        if external_scanner_path.exists() {
-            builder.file(external_scanner_path);
-        }
-        if typescript_scanner_c_path.exists() {
-            builder.file(typescript_scanner_c_path);
-        }
-
-        builder
-            .flag("-Wno-unused-parameter")
-            .flag("-Wno-unused-but-set-variable")
-            .compile(&format!("tree-sitter-{}", lang));
-
-        println!("cargo:rustc-link-search=native={}", dest_path.display());
-        println!("cargo:rustc-link-lib=static=tree-sitter-{}", lang);
+        println!("cargo:rerun-if-changed={}", lang_dir.display());
     }
 
     println!("cargo:rerun-if-changed=build.rs");

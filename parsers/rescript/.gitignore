@@ -1,0 +1,5 @@
+node_modules/
+log.html
+test_wild/
+build/
+binding.gyp

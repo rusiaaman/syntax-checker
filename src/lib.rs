@@ -1,5 +1,6 @@
 use pyo3::prelude::*;
 use tree_sitter::Parser;
+use std::collections::HashSet;
 
 extern "C" {
     fn tree_sitter_bash() -> Language;
@@ -25,7 +26,9 @@ use tree_sitter::Language;
 #[pyclass]
 struct Output {
     #[pyo3(get)]
-    errors: Vec<(usize, usize)>  // (line, column) tuples
+    errors: Vec<(usize, usize)>,  // (line, column) tuples
+    #[pyo3(get)]
+    description: String,  // Aggregated error descriptions
 }
 
 #[pyfunction]
@@ -62,24 +65,68 @@ fn check_syntax(program_name: &str, program_content: &str) -> PyResult<Output> {
     })?;
     
     let mut errors = Vec::new();
+    let mut descriptions = Vec::new();
     let root_node = tree.root_node();
     
+    // Use HashSet to deduplicate error positions
+    let mut seen_errors = HashSet::new();
+    
     // Traverse the syntax tree to find ERROR nodes
-    fn traverse_node(node: tree_sitter::Node, errors: &mut Vec<(usize, usize)>) {
-        if node.is_error() || node.has_error() {
+    fn traverse_node(
+        node: tree_sitter::Node,
+        errors: &mut Vec<(usize, usize)>,
+        descriptions: &mut Vec<String>,
+        seen: &mut HashSet<(usize, usize)>
+    ) {
+        // Only process actual error nodes, not nodes that contain errors
+        if node.is_error() || node.is_missing() {
             let start = node.start_position();
-            errors.push((start.row + 1, start.column + 1));
+            let error_pos = (start.row + 1, start.column + 1);
+            
+            // Only add error if we haven't seen it before
+            if !seen.contains(&error_pos) {
+                errors.push(error_pos);
+                seen.insert(error_pos);
+                
+                // Generate error description
+                let error_type = if node.is_missing() {
+                    format!("Missing {}", node.kind())
+                } else {
+                    format!("Syntax error: unexpected {}", node.kind())
+                };
+                let context = node.parent()
+                    .map(|p| format!(" in {}", p.kind()))
+                    .unwrap_or_else(|| String::new());
+                descriptions.push(format!("Line {}, Column {}: {}{}", 
+                    start.row + 1, start.column + 1, error_type, context));
+            }
+            
+            // For error nodes that span multiple lines, also mark the end position
+            let end = node.end_position();
+            if end.row > start.row {
+                let end_pos = (end.row + 1, end.column + 1);
+                if !seen.contains(&end_pos) {
+                    errors.push(end_pos);
+                    seen.insert(end_pos);
+                }
+            }
         }
         
         let mut cursor = node.walk();
         for child in node.children(&mut cursor) {
-            traverse_node(child, errors);
+            traverse_node(child, errors, descriptions, seen);
         }
     }
     
-    traverse_node(root_node, &mut errors);
+    traverse_node(root_node, &mut errors, &mut descriptions, &mut seen_errors);
     
-    Ok(Output { errors })
+    let description = if descriptions.is_empty() {
+        String::new()
+    } else {
+        descriptions.join("\n")
+    };
+    
+    Ok(Output { errors, description })
 }
 
 #[pymodule]

@@ -2,6 +2,8 @@
 
 A Python library that uses Tree-sitter to check syntax errors across multiple programming languages based on Rust.
 
+⚠️ Warning: this repo is AI generated and partially human reviewed and tested.
+
 ## Installation
 `pip install syntax_checker`
 

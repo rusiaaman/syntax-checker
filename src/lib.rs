@@ -39,7 +39,8 @@ fn check_syntax(program_extension: &str, program_content: &str) -> PyResult<Outp
     let language: Language = match program_extension {
         "py" => unsafe { tree_sitter_python() },
         "js" => unsafe { tree_sitter_javascript() },
-        "ts" | "tsx" | "jsx" => unsafe { tree_sitter_typescript() },
+        "ts" | "tsx" => unsafe { tree_sitter_typescript() },
+        "jsx" => unsafe { tree_sitter_javascript() },
         "rs" => unsafe { tree_sitter_rust() },
         "c" | "h" => unsafe { tree_sitter_c() },
         "cpp" | "hpp" => unsafe { tree_sitter_cpp() },

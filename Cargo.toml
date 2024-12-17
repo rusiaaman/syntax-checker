@@ -2,6 +2,7 @@
 name = "syntax-checker"
 version = "0.2.1"
 edition = "2021"
+description = "Multi-language syntax checker using tree-sitter parsers with Python bindings"
 
 [lib]
 name = "syntax_checker"

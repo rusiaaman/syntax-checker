@@ -1,4 +1,4 @@
-import multi_parser
+import syntax_checker
 
 # Test Python syntax
 python_code = """
@@ -8,7 +8,7 @@ def test():
     return 42
 """
 
-result = multi_parser.check_syntax("test.py", python_code)
+result = syntax_checker.check_syntax("test.py", python_code)
 print("Python errors:", result.errors)
 
 # Test JavaScript syntax
@@ -20,5 +20,5 @@ function test() {
 }
 """
 
-result = multi_parser.check_syntax("test.js", js_code)
+result = syntax_checker.check_syntax("test.js", js_code)
 print("JavaScript errors:", result.errors)

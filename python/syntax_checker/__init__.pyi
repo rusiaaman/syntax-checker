@@ -3,9 +3,27 @@ from typing_extensions import Literal, TypeAlias
 
 # Type alias for supported file extensions
 FileExtension: TypeAlias = Literal[
-    "py", "js", "ts", "tsx", "jsx", "rs", "c", "h", "cpp", 
-    "hpp", "sh", "css", "html", "htm", "java", "json", "go", 
-    "rb", "toml", "php", "cs"
+    "py",     # Python parser
+    "js",     # JavaScript parser
+    "ts",     # TypeScript parser
+    "tsx",    # TypeScript parser
+    "jsx",    # JavaScript parser
+    "rs",     # Rust parser
+    "c",      # C parser
+    "h",      # C parser
+    "cpp",    # C++ parser
+    "hpp",    # C++ parser
+    "sh",     # Bash parser
+    "css",    # CSS parser
+    "html",   # HTML parser
+    "htm",    # HTML parser
+    "java",   # Java parser
+    "json",   # JSON parser
+    "go",     # Go parser
+    "rb",     # Ruby parser
+    "toml",   # TOML parser
+    "php",    # PHP parser
+    "cs"      # C# parser
 ]
 
 class Output:

@@ -23,6 +23,7 @@ jobs:
     runs-on: ${{ matrix.platform.runner }}
     env:
       CFLAGS: "-std=c99"
+      CXXFLAGS: "-std=c++11"
     strategy:
       matrix:
         platform:

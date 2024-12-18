@@ -7,6 +7,7 @@ extern "C" {
     fn tree_sitter_python() -> Language;
     fn tree_sitter_javascript() -> Language;
     fn tree_sitter_typescript() -> Language;
+    fn tree_sitter_tsx() -> Language;
     fn tree_sitter_rust() -> Language;
     fn tree_sitter_c() -> Language;
     fn tree_sitter_cpp() -> Language;
@@ -39,7 +40,8 @@ fn check_syntax(program_extension: &str, program_content: &str) -> PyResult<Outp
     let language: Language = match program_extension {
         "py" => unsafe { tree_sitter_python() },
         "js" => unsafe { tree_sitter_javascript() },
-        "ts" | "tsx" => unsafe { tree_sitter_typescript() },
+        "ts" => unsafe { tree_sitter_typescript() },
+        "tsx" => unsafe { tree_sitter_tsx() },
         "jsx" => unsafe { tree_sitter_javascript() },
         "rs" => unsafe { tree_sitter_rust() },
         "c" | "h" => unsafe { tree_sitter_c() },

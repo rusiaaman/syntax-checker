@@ -39,27 +39,22 @@ fn main() {
         // Handle special cases for TypeScript and TSX
         else if *lang == "typescript" || *lang == "tsx" {
             let type_dir = if *lang == "typescript" { "typescript" } else { "tsx" };
-            builder.include(&lang_dir.join(format!("{}/src", type_dir)));
-            if lang_dir.join(format!("{}/src/parser.c", type_dir)).exists() {
-                builder.file(&lang_dir.join(format!("{}/src/parser.c", type_dir)));
+            let src_path = lang_dir.join(format!("{}/src", type_dir));
+            
+            builder.include(&src_path);
+            
+            let parser_path = src_path.join("parser.c");
+            if parser_path.exists() {
+                builder.file(&parser_path);
             }
-            if lang_dir.join(format!("{}/src/scanner.c", type_dir)).exists() {
-                builder.file(&lang_dir.join(format!("{}/src/scanner.c", type_dir)));
+            
+            let scanner_path = src_path.join("scanner.c");
+            if scanner_path.exists() {
+                builder.file(&scanner_path);
             }
         }
         else {
             builder.include(&lang_dir.join("src"));
-        }
-
-        // Handle special cases for TypeScript and TSX
-        if *lang == "typescript" {
-            builder.include(&lang_dir.join("typescript/src"));
-            if lang_dir.join("typescript/src/parser.c").exists() {
-                builder.file(&lang_dir.join("typescript/src/parser.c"));
-            }
-            if lang_dir.join("typescript/src/scanner.c").exists() {
-                builder.file(&lang_dir.join("typescript/src/scanner.c"));
-            }
         }
 
         // Add main parser source

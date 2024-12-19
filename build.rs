@@ -2,6 +2,14 @@ use std::path::Path;
 use std::env;
 
 fn main() {
+    let mut default_builder = cc::Build::new();
+    default_builder
+        .cpp(true)
+        .flag("-std=c++11")
+        .flag("-D_GLIBCXX_USE_CXX11_ABI=1")
+        .flag_if_supported("-Wno-unused-parameter")
+        .flag_if_supported("-Wno-unused-but-set-variable");
+
     let manifest_dir = env::var("CARGO_MANIFEST_DIR").unwrap();
     let parsers_dir = Path::new(&manifest_dir).join("parsers");
 
@@ -17,7 +25,7 @@ fn main() {
 
     for lang in languages.iter() {
         let lang_dir = parsers_dir.join(lang);
-        let mut builder = cc::Build::new();
+        let mut builder = default_builder.clone();
 
         builder
             .include(&tree_sitter_include)

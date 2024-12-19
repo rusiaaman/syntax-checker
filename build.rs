@@ -109,9 +109,17 @@ fn main() {
         };
 
         // Build with flags that have been set in builder initialization
+        let lib_name = format!("tree-sitter-{}", lang.replace("_", "-"));
         if force_cpp {
             println!("cargo:rustc-link-lib=dylib=c++");
-            actual_builder.cpp_link_stdlib(Some("c++")).compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
+            actual_builder.cpp_link_stdlib(Some("c++")).compile(&lib_name);
+        } else {
+            actual_builder.compile(&lib_name);
+        }
+
+        // For C++ libraries, make sure we export the tree-sitter symbols
+        if force_cpp {
+            println!("cargo:rustc-cdylib-link-arg=-Wl,-exported_symbol,_tree_sitter_{}", lang.replace("_", "-"));
         } else {
             actual_builder.compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
         }

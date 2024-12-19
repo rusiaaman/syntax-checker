@@ -16,3 +16,4 @@ Cargo.lock
 # Debugging and temporary files
 *.log
 *.tmp
+venv/

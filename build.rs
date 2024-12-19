@@ -90,8 +90,16 @@ fn main() {
         let scanner_c_path = lang_dir.join("src/scanner.c");
         let scanner_cc_path = lang_dir.join("src/scanner.cc");
         
-        let mut actual_builder = if scanner_cc_path.exists() {
-            cpp_build.file(&scanner_cc_path);
+        // Special case: C++ scanners with .c extension
+        let cpp_scanner_languages = ["cpp", "c"];
+        let force_cpp = cpp_scanner_languages.contains(&lang);
+        
+        let actual_builder = if scanner_cc_path.exists() || (force_cpp && scanner_c_path.exists()) {
+            if scanner_cc_path.exists() {
+                cpp_build.file(&scanner_cc_path);
+            } else {
+                cpp_build.file(&scanner_c_path);
+            }
             &mut cpp_build
         } else {
             if scanner_c_path.exists() {

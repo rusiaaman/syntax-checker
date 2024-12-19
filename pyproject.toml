@@ -9,6 +9,8 @@ authors = [
     {name = "Aman Rusia", email = "gapypi@arcfu.com"}
 ]
 requires-python = ">=3.7"
+homepage = "https://github.com/rusiaaman/syntax-checker"
+repository = "https://github.com/rusiaaman/syntax-checker"
 classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.7",

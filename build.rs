@@ -109,7 +109,11 @@ fn main() {
         };
 
         // Build with flags that have been set in builder initialization
-        actual_builder.compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
+        if force_cpp {
+            actual_builder.cpp_link_stdlib(Some("c++")).compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
+        } else {
+            actual_builder.compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
+        }
 
         println!("cargo:rerun-if-changed={}", lang_dir.display());
     }

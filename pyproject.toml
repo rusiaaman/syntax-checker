@@ -6,7 +6,7 @@ build-backend = "maturin"
 name = "syntax-checker"
 description = "A syntax checker for multiple languages using tree-sitter"
 authors = [
-    {name = "Aaman Rusia", email = "aaman@rusia.co.in"}
+    {name = "Aman Rusia", email = "gapypi@arcfu.com"}
 ]
 requires-python = ">=3.7"
 classifiers = [

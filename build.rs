@@ -119,7 +119,7 @@ fn main() {
 
         // For C++ libraries, make sure we export the tree-sitter symbols
         if force_cpp {
-            println!("cargo:rustc-cdylib-link-arg=-Wl,-exported_symbol,_tree_sitter_{}", lang.replace("_", "-"));
+            println!("cargo:rustc-link-lib=static=tree_sitter_{}", lang.replace("_", "-"));
         } else {
             actual_builder.compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
         }

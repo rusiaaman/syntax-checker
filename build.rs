@@ -110,6 +110,7 @@ fn main() {
 
         // Build with flags that have been set in builder initialization
         if force_cpp {
+            println!("cargo:rustc-link-lib=dylib=c++");
             actual_builder.cpp_link_stdlib(Some("c++")).compile(&format!("tree-sitter-{}", lang.replace("_", "-")));
         } else {
             actual_builder.compile(&format!("tree-sitter-{}", lang.replace("_", "-")));

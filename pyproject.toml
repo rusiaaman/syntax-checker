@@ -4,6 +4,7 @@ build-backend = "maturin"
 
 [project]
 name = "syntax-checker"
+version = "0.1.0"
 description = "A syntax checker for multiple languages using tree-sitter"
 authors = [
     {name = "Aman Rusia", email = "gapypi@arcfu.com"}

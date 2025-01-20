@@ -49,32 +49,32 @@ print(output.description)  # ""
 
 ## Supported Languages and File Extensions
 
-| Language       | Extension(s)        | Command            |
-|---------------|-------------------|-------------------|
-| Bash          | .sh               | bash              |
-| C             | .c, .h           | c                 |
-| C++           | .cpp, .hpp       | cpp               |
-| C#            | .cs              | c_sharp           |
-| CSS           | .css             | css               |
-| Elisp         | .el              | elisp             |
-| Elixir        | .ex, .exs        | elixir           |
-| Elm           | .elm             | elm              |
-| Go            | .go              | go                |
-| HTML          | .html, .htm      | html             |
-| Java          | .java            | java             |
-| JavaScript    | .js              | javascript        |
-| JSX           | .jsx             | jsx              |
-| JSON          | .json            | json             |
-| Lua           | .lua             | lua              |
-| PHP           | .php             | php              |
-| Python        | .py              | python           |
-| ReScript      | .res             | rescript         |
-| Ruby          | .rb              | ruby             |
-| Rust          | .rs              | rust             |
-| Solidity      | .sol             | solidity         |
-| TOML          | .toml            | toml             |
-| TypeScript    | .ts              | typescript        |
-| TSX           | .tsx             | tsx              |
+| Language       | Extension(s)        |
+|---------------|-------------------|
+| Bash          | sh               |
+| C             | c, h            |
+| C++           | cpp, hpp        |
+| C#            | cs              |
+| CSS           | css             |
+| Elisp         | el              |
+| Elixir        | ex, exs        |
+| Elm           | elm             |
+| Go            | go              |
+| HTML          | html, htm      |
+| Java          | java           |
+| JavaScript    | js              |
+| JSX           | jsx             |
+| JSON          | json            |
+| Lua           | lua             |
+| PHP           | php             |
+| Python        | py              |
+| ReScript      | res             |
+| Ruby          | rb              |
+| Rust          | rs              |
+| Solidity      | sol             |
+| TOML          | toml            |
+| TypeScript    | ts              |
+| TSX           | tsx             |
 
 ## How It Works
 

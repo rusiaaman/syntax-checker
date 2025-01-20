@@ -20,6 +20,13 @@ extern "C" {
     fn tree_sitter_toml() -> Language;
     fn tree_sitter_php() -> Language;
     fn tree_sitter_c_sharp() -> Language;
+    fn tree_sitter_elisp() -> Language;
+    fn tree_sitter_elixir() -> Language;
+    fn tree_sitter_elm() -> Language;
+    fn tree_sitter_embedded_template() -> Language;
+    fn tree_sitter_lua() -> Language;
+    fn tree_sitter_rescript() -> Language;
+    fn tree_sitter_solidity() -> Language;
 }
 
 use tree_sitter::Language;
@@ -56,6 +63,13 @@ fn check_syntax(program_extension: &str, program_content: &str) -> PyResult<Outp
         "toml" => unsafe { tree_sitter_toml() },
         "php" => unsafe { tree_sitter_php() },
         "cs" => unsafe { tree_sitter_c_sharp() },
+        "el" | "elisp" => unsafe { tree_sitter_elisp() },
+        "ex" | "exs" => unsafe { tree_sitter_elixir() },
+        "elm" => unsafe { tree_sitter_elm() },
+        "erb" => unsafe { tree_sitter_embedded_template() },
+        "lua" => unsafe { tree_sitter_lua() },
+        "res" => unsafe { tree_sitter_rescript() },
+        "sol" => unsafe { tree_sitter_solidity() },
         _ => return Err(pyo3::exceptions::PyValueError::new_err("Unsupported file extension")),
     };
     

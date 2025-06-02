@@ -2857,7 +2857,7 @@
         "value": 1,
         "content": {
           "type": "PATTERN",
-          "value": "([^\"&]|&[^#A-Za-z])+"
+          "value": "[^\"]+"
         }
       }
     },
@@ -2868,7 +2868,7 @@
         "value": 1,
         "content": {
           "type": "PATTERN",
-          "value": "([^'&]|&[^#A-Za-z])+"
+          "value": "[^']+"
         }
       }
     },
@@ -6927,5 +6927,6 @@
     "expression",
     "primary_expression",
     "pattern"
-  ]
+  ],
+  "reserved": {}
 }

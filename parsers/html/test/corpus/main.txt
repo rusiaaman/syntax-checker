@@ -380,3 +380,38 @@ Omitted end tags for html and head
     (element
       (start_tag
         (tag_name)))))
+
+==============================
+Unescaped ampersands in content  
+==============================
+
+<p>Tom & Jerry and Jack & Jill</p>
+---
+
+(document
+  (element
+    (start_tag (tag_name))
+    (text)
+    (loose_ampersand)
+    (text)
+    (loose_ampersand)
+    (text)
+    (end_tag (tag_name))))
+
+==================================
+Mixed entities and loose ampersands
+==================================
+
+<p>Proper: &amp; &lt; but also: Tom & Jerry</p>
+---
+
+(document
+  (element
+    (start_tag (tag_name))
+    (text)
+    (entity)
+    (entity)
+    (text)
+    (loose_ampersand)
+    (text)
+    (end_tag (tag_name))))

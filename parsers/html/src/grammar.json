@@ -56,6 +56,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "loose_ampersand"
+        },
+        {
+          "type": "SYMBOL",
           "name": "element"
         },
         {
@@ -376,6 +380,19 @@
       "type": "PATTERN",
       "value": "&(#([xX][0-9a-fA-F]{1,6}|[0-9]{1,5})|[A-Za-z]{1,30});?"
     },
+    "loose_ampersand": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "&\\s"
+        },
+        {
+          "type": "PATTERN",
+          "value": "&[^A-Za-z#<>]"
+        }
+      ]
+    },
     "quoted_attribute_value": {
       "type": "CHOICE",
       "members": [
@@ -497,5 +514,6 @@
     }
   ],
   "inline": [],
-  "supertypes": []
+  "supertypes": [],
+  "reserved": {}
 }

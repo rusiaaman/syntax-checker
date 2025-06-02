@@ -53,6 +53,10 @@
           "named": true
         },
         {
+          "type": "loose_ampersand",
+          "named": true
+        },
+        {
           "type": "script_element",
           "named": true
         },
@@ -93,6 +97,10 @@
         },
         {
           "type": "erroneous_end_tag",
+          "named": true
+        },
+        {
+          "type": "loose_ampersand",
           "named": true
         },
         {
@@ -147,6 +155,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "loose_ampersand",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "quoted_attribute_value",
@@ -289,7 +302,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "doctype",

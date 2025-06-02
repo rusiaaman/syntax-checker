@@ -177,7 +177,7 @@ module.exports = function defineGrammar(dialect) {
           field('arguments', $.arguments),
         )),
         prec('template_call', seq(
-          field('function', choice($.primary_expression, $.new_expression)),
+          field('function', choice($.primary_expression, $.new_expression, $.instantiation_expression)),
           field('arguments', $.template_string),
         )),
         prec('member', seq(
@@ -322,8 +322,10 @@ module.exports = function defineGrammar(dialect) {
         seq(
           'export',
           'type',
-          $.export_clause,
-          optional($._from_clause),
+          choice(
+            seq('*', $._from_clause),
+            seq($.export_clause, optional($._from_clause)),
+          ),
           $._semicolon,
         ),
         seq('export', '=', $.expression, $._semicolon),

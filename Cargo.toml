@@ -13,22 +13,6 @@ crate-type = ["cdylib"]
 [dependencies]
 pyo3 = { version = "0.19.0", features = ["extension-module"] }
 tree-sitter = "0.22.0"
-tree-sitter-rust = "0.20.4"
-tree-sitter-typescript = "0.20.3"
-tree-sitter-python = "0.20.4"
-tree-sitter-c = "0.20.0"
-tree-sitter-cpp = "0.20.0"
-tree-sitter-javascript = "0.20.1"
-tree-sitter-bash = "0.20.0"
-tree-sitter-css = "0.20.0"
-tree-sitter-html = "0.19.0"
-tree-sitter-java = "0.20.0"
-tree-sitter-json = "0.20.0"
-tree-sitter-go = "0.19.1"
-tree-sitter-ruby = "0.20.0"
-tree-sitter-toml = "0.20.0"
-tree-sitter-php = "0.20.0"
-tree-sitter-c-sharp = "0.20.0"
 
 [build-dependencies]
 cc = "1.0"

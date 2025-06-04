@@ -22,7 +22,8 @@ fn main() {
         builder
             .include(&tree_sitter_include)
             .include(&manifest_dir)
-            .include(format!("{}/include", manifest_dir));
+            .include(format!("{}/include", manifest_dir))
+            .define("_GNU_SOURCE", None);
 
         // Special handling for PHP which has two parsers
         if *lang == "php" {

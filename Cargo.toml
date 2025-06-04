@@ -1,6 +1,6 @@
 [package]
 name = "syntax-checker"
-version = "0.4.0-beta.2"
+version = "0.4.0-beta.3"
 edition = "2021"
 description = "Multi-language syntax checker using tree-sitter parsers with Python bindings"
 homepage = "https://github.com/rusiaaman/syntax-checker"

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["maturin>=1.4,<2.0"]
+requires = ["maturin>=1.7,<2.0"]
 build-backend = "maturin"
 
 [project]
@@ -8,20 +8,22 @@ description = "A syntax checker for multiple languages using tree-sitter"
 authors = [
     {name = "Aman Rusia", email = "gapypi@arcfu.com"}
 ]
-requires-python = ">=3.7"
+requires-python = ">=3.9"
+dynamic = ["version"]
 homepage = "https://github.com/rusiaaman/syntax-checker"
 repository = "https://github.com/rusiaaman/syntax-checker"
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Rust",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Text Processing :: General",
 ]
 
 [tool.maturin]
-features = ["pyo3/extension-module"]
+features = ["pyo3/extension-module", "pyo3/abi3-py39"]

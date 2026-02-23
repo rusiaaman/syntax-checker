@@ -147,7 +147,7 @@ fn check_syntax(program_extension: &str, program_content: &str) -> PyResult<Outp
 }
 
 #[pymodule]
-fn syntax_checker(_py: Python, m: &PyModule) -> PyResult<()> {
+fn syntax_checker(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(check_syntax, m)?)?;
     m.add_class::<Output>()?;
     Ok(())

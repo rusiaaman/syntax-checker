@@ -1,6 +1,6 @@
 [package]
 name = "syntax-checker"
-version = "0.4.0"
+version = "0.4.1"
 edition = "2021"
 description = "Multi-language syntax checker using tree-sitter parsers with Python bindings"
 homepage = "https://github.com/rusiaaman/syntax-checker"
@@ -11,7 +11,7 @@ name = "syntax_checker"
 crate-type = ["cdylib"]
 
 [dependencies]
-pyo3 = { version = "0.19.0", features = ["extension-module"] }
+pyo3 = { version = "0.28", features = ["extension-module", "abi3-py39"] }
 tree-sitter = "0.24"
 
 [build-dependencies]
